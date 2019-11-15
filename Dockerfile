@@ -6,7 +6,7 @@ MAINTAINER Mitch Allen "docker@mitchallen.com"
 
 LABEL com.mitchallen.pi-cross-compile="{\"Description\":\"Cross Compile for Raspberry Pi\",\"Usage\":\"docker run -it -v ~/myprojects/mybuild:/build mitchallen/pi-cross-compile\",\"Version\":\"0.1.0\"}"
 
-RUN apt-get update && apt-get install -y git && apt-get install -y build-essential cmake pkg-config
+RUN apt-get update && apt-get install -y git build-essential cmake pkg-config wget
 
 RUN git clone --progress --verbose https://github.com/raspberrypi/tools.git --depth=1 pitools
 RUN git clone --progress --verbose https://github.com/raspberrypi/userland.git --depth=1 userland
@@ -16,8 +16,13 @@ ENV PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/pitools/a
 RUN cd /userland && ./buildme && cd build/arm-linux/release && make install
 RUN mkdir -p /opt/vc/src && cd /userland/host_applications/linux/apps && cp -R * /opt/vc/src/
 RUN cd /opt/vc/src/hello_pi/ && CC=/pitools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/bin/arm-linux-gnueabihf-gcc make -C libs/ilclient
+RUN cd /tmp &&  \
+    wget -q https://dl.google.com/go/go1.13.4.linux-amd64.tar.gz && \
+    tar xzf go1.13.4.linux-amd64.tar.gz -C /usr/local && \
+    rm go1.13.4.linux-amd64.tar.gz
 
 ENV BUILD_FOLDER /build
+ENV PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/pitools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/bin:/usr/local/go/bin
 
 WORKDIR ${BUILD_FOLDER}
 
