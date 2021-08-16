@@ -1,6 +1,6 @@
-FROM ubuntu:16.04
+FROM ubuntu:20.04
 
-MAINTAINER Mitch Allen "docker@mitchallen.com"
+LABEL org.opencontainers.image.authors="matthilton2005@gmail.com"
 
 # USAGE: docker run -it -v ~/raspberry/hello:/build mitchallen/pi-cross-compile
 
