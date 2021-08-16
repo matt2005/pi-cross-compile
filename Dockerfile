@@ -18,6 +18,8 @@ LABEL com.mitchallen.pi-cross-compile="{\"Description\":\"Cross Compile for Rasp
 # export CXX=/pitools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/bin/arm-linux-gnueabihf-g++
 # export PREFIX=/usr/${HOST}
 
+ENV DEBIAN_FRONTEND noninteractive
+ARG DEBIAN_FRONTEND=noninteractive
 ENV FREETYPE_VER 2.10.0
 ENV ZLIB_VER 1.2.11
 ENV PNG_VER 1.6.37
